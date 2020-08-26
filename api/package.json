@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple NodeJS app using Express with a Mongoose database.  Examples for file upload and download from AWS S3 with upload into Azure Blob storage.",
   "main": "server.js",
   "scripts": {
     "start": "node src/server.js",
