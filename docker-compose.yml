@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  web-app:
+    container_name: web-app
+    image: jeffbeiercygrp/bootcamp_web-app
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    ports:
+      - 3000:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    networks:
+      - webappnetwork
+  web-api:
+    container_name: web-api
+    image: jeffbeiercygrp/bootcamp_web-api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongo
+    networks:
+      - webappnetwork
+  mongo:
+    image: mongo
+    restart: always
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data-node:/data/db
+    networks:
+      - webappnetwork
+
+networks:
+    webappnetwork:
+        driver: bridge
