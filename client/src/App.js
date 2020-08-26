@@ -24,7 +24,7 @@ class App extends Component {
                 <Link to="/tests">Run connection tests</Link> 
               </li>
               <li> 
-                <Link to="/load/COVID-19+Activity.csv">Load test data</Link> 
+                <Link to="/load">Load test data</Link> 
               </li> 
               <li> 
                 <Link to="/list">List test data</Link> 
@@ -35,7 +35,7 @@ class App extends Component {
             <Route exact path='/' component={Home}></Route> 
             <Route exact path='/helloWorld' component={MyHelloWorld}></Route> 
             <Route exact path='/tests' component={TestConnections}></Route> 
-            <Route exact path='/load/:fileKey' component={LoadData}></Route> 
+            <Route exact path='/load' component={LoadData}></Route> 
             <Route exact path='/list' component={ListData}></Route> 
           </Switch> 
         </div>  
