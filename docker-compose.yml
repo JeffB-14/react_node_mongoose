@@ -1,6 +1,16 @@
 version: '3.7'
 
 services:
+  mongo:
+    image: mongo
+    container_name: mongo-test
+#    restart: always
+    ports:
+      - 27017:27017
+#    volumes:
+#      - ./data-node:/data/db
+    networks:
+      - webappnetwork
   web-app:
     container_name: web-app
     image: jeffbeiercygrp/bootcamp_web-app
@@ -24,19 +34,12 @@ services:
       context: ./api
       dockerfile: Dockerfile
     ports:
-      - "3001:3001"
+      - 8080:8080
+    volumes:
+      - ./api:/api
+      - /api/node_modules
     depends_on:
       - mongo
-    networks:
-      - webappnetwork
-  mongo:
-    image: mongo
-    restart: always
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./data-node:/data/db
     networks:
       - webappnetwork
 

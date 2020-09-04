@@ -20,10 +20,14 @@ const s3 = new AWS.S3({
     secretAccessKey: process.env.AWS_SECRET,
     region: process.env.AWS_REGION
 })
+let returnMessage = "Waiting for response...";
 
 const handleError = (err, res) => {
-    res.status(500);
-    res.render('error', { error: err });
+    //res.status(500);
+    //res.render('error', { error: err });
+    res.send('<h1>'+message+'</h1> \
+        <h2>'+err.status+'</h2> \
+        <pre>'+err.stack+'</pre>');
 };
 
 const getBlobName = originalName => {
@@ -45,21 +49,28 @@ router.get('/', function(req, res, next) {
 
     s3.getObject(params, function(err, data){
       if (err) { 
-        handleError(err,res);
+        //handleError(err,res);
+        returnMessage = '<h2>'+err.status+'</h2> \
+            <pre>'+err.stack+'</pre>';
         return next() 
       } else {
         try{
             const blobName = uploadToAzureBlob(fileKey,data.Body,res);
-        
+            returnMessage = 'File uploaded to Azure Blob storage as ' + blobName;
+            /*
             res.render('success', { 
                 message: 'File uploaded to Azure Blob storage as ' + blobName
             });
+            */
         }catch(err){
-            handleError(err,res);
-            return;
+            returnMessage = '<h2>'+err.status+'</h2> \
+            <pre>'+err.stack+'</pre>';
+            //handleError(err,res);
+            //return;
         }
       } 
     });
+    res.send(returnMessage);
 });
 
 function uploadToAzureBlob(fileKey, data, res){
@@ -70,7 +81,9 @@ function uploadToAzureBlob(fileKey, data, res){
 
     blobService.createBlockBlobFromStream(containerName, blobName, stream, streamLength, err => {
         if(err) {
-            handleError(err,res);
+            returnMessage = '<h2>'+err.status+'</h2> \
+            <pre>'+err.stack+'</pre>';
+            //handleError(err,res);
             return;
         }
     });

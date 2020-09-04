@@ -12,14 +12,14 @@ class TestConnections extends Component {
     }
     
     callAPI() {
-      fetch("http://localhost:3001/testAPI")
+      fetch("http://localhost:8080/testAPI")
           .then(res => res.text())
           .then(res => this.setState({ apiResponse: res }))
           .catch(err => err);
     }
   
     callDB() {
-      fetch("http://localhost:3001/testDB")
+      fetch("http://localhost:8080/testDB")
           .then(res => res.text())
           .then(res => this.setState({ dbResponse: res }))
           .catch(err => err);
