@@ -24,7 +24,7 @@ class TestConnections extends Component {
           .then(res => this.setState({ dbResponse: res }))
           .catch(err => err);
     }
-  
+    
     componentDidMount(){
       this.callAPI();
       this.callDB();

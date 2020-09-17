@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  mongo:
+  mongo-test:
     image: mongo
     container_name: mongo-test
 #    restart: always
@@ -17,9 +17,9 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
-    volumes:
-      - /app/node_modules
-      - ./client:/app
+#    volumes:
+#      - /app/node_modules
+#      - ./client:/app
     ports:
       - 3000:3000
     environment:
@@ -35,11 +35,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:8080
-    volumes:
-      - ./api:/api
-      - /api/node_modules
+#    volumes:
+#      - ./api:/api
+#      - /api/node_modules
     depends_on:
-      - mongo
+      - mongo-test
     networks:
       - webappnetwork
 
